@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using VehicleManagement.Business;
 using VehicleManagement.Models;
 
 namespace VehicleManagement.API.Controllers
@@ -11,30 +8,18 @@ namespace VehicleManagement.API.Controllers
     [Route("[controller]")]
     public class VehicleController : ControllerBase
     {
-        private readonly ILogger<VehicleController> _logger;
+        private readonly IVehicleBusiness _vehicleBusiness;
 
-        public VehicleController(ILogger<VehicleController> logger)
+        public VehicleController(IVehicleBusiness vehicleBusiness)
         {
-            _logger = logger;
-        }
-
-        [HttpGet]
-        [Route("")]
-
-        public IEnumerable<Vehicle> Read()
-        {
-            return new List<Vehicle>()
-            {
-                new Vehicle("AAA0000", "Sedan"),
-                new Vehicle("AAA0000", "Hatch"),
-            };
+            _vehicleBusiness = vehicleBusiness;
         }
 
         [HttpGet]
         [Route("{id}")]
-        public Vehicle Read(int id)
+        public Vehicle Get(int id)
         {
-            return new Vehicle("AAA0000", "TESTE");
+            return _vehicleBusiness.GetVehicle(id);
         }
     }
 }

@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
 
 namespace VehicleManagement.Data
 {
-    public abstract class RepositoryBase<T>
+    public class RepositoryBase<T>
     {
 		protected string _connectionString = System.Environment.GetEnvironmentVariable("CONNECTION_STRING");
 
@@ -21,7 +20,7 @@ namespace VehicleManagement.Data
 		{
 			using (var connection = this.NewConnection())
 			{
-				var result = connection.QuerySingleOrDefault<T>(query, param, commandType: CommandType.StoredProcedure);
+				var result = connection.QuerySingleOrDefault<T>(query, param);
 				return result;
 			}
 		}

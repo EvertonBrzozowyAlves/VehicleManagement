@@ -11,6 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\VehicleManagement.Business\VehicleManagement.Business.csproj" />
+    <ProjectReference Include="..\VehicleManagement.Configuration\VehicleManagement.Configuration.csproj" />
     <ProjectReference Include="..\VehicleManagement.Models\VehicleManagement.Models.csproj" />
   </ItemGroup>
 

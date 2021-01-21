@@ -1,15 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using VehicleManagement.Models;
+﻿using VehicleManagement.Models;
 
 namespace VehicleManagement.Data
 {
-    public class VehicleRepository : RepositoryBase<Vehicle>
+    public class VehicleRepository : RepositoryBase<Vehicle>, IVehicleRepository
     {
         public Vehicle Get(int id)
         {
-            throw new NotImplementedException();
+            return Get(@"SELECT 
+							 [Id]
+							,[Active]
+							,[RegisterDate]
+							,[Plate]
+							,[Model]
+							,[ManufacturerId]
+						FROM
+							[VehicleManagement].[dbo].[Vehicles]
+						WHERE
+							[Id] = 1 "
+						, new Vehicle() { Id = id });
         }
     }
 }
