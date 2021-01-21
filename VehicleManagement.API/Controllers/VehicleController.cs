@@ -25,19 +25,16 @@ namespace VehicleManagement.API.Controllers
         {
             return new List<Vehicle>()
             {
-                new Vehicle("AAA0000", "Sedan", 1),
-                new Vehicle("AAA0000", "Hatch", 2),
+                new Vehicle("AAA0000", "Sedan"),
+                new Vehicle("AAA0000", "Hatch"),
             };
         }
 
         [HttpGet]
         [Route("{id}")]
-        public IEnumerable<Vehicle> Read(int id)
+        public Vehicle Read(int id)
         {
-            return new List<Vehicle>()
-            {
-                new Vehicle("AAA0000", "Sedan", 1),
-            };
+            return new Vehicle("AAA0000", "TESTE");
         }
     }
 }

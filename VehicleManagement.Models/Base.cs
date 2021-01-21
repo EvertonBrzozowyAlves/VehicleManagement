@@ -10,7 +10,8 @@ namespace VehicleManagement.Models
         }
 
         public int Id { get; set; }
-        private DateTime RegisterDate { get; set; }
+        public bool Active { get; set; }
+        public DateTime RegisterDate { get; set; }
 
     }
 }
