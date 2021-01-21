@@ -2,7 +2,7 @@
 {
     public class Vehicle : Base
     {
-        public Vehicle()
+        public Vehicle() 
         {
         }
 

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace VehicleManagement.Models
 {
@@ -8,10 +6,7 @@ namespace VehicleManagement.Models
     {
         public Base()
         {
-            if (RegisterDate == null)
-            {
-                RegisterDate = DateTime.Now;
-            }
+            RegisterDate = DateTime.Now;
         }
 
         public int Id { get; set; }
