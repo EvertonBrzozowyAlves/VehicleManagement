@@ -1,4 +1,5 @@
-﻿using VehicleManagement.Models;
+﻿using System.Collections.Generic;
+using VehicleManagement.Models;
 
 namespace VehicleManagement.Data.Implementations
 {
@@ -16,6 +17,17 @@ namespace VehicleManagement.Data.Implementations
 						WHERE
 							[{nameof(Manufacturer.ManufacturerId)}] = @{nameof(Manufacturer.ManufacturerId)}"
 						, new Manufacturer() { ManufacturerId = id });
+		}
+
+		public IEnumerable<Manufacturer> GetAll()
+		{
+			return GetAll($@"SELECT 
+							 [{nameof(Manufacturer.ManufacturerId)}]
+							,[{nameof(Vehicle.IsActive)}]
+							,[{nameof(Vehicle.RegisterDate)}]
+							,[{nameof(Manufacturer.Name)}]
+						FROM
+							[VehicleManagement].[dbo].[Manufacturers]");
 		}
 	}
 }

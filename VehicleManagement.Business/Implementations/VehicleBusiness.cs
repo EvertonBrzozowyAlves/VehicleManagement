@@ -8,11 +8,9 @@ namespace VehicleManagement.Business.Implementations
     public class VehicleBusiness : IVehicleBusiness
     {
         private readonly IVehicleRepository _vehicleRepository;
-        private readonly IManufacturerRepository _manufacturerRepository;
-        public VehicleBusiness(IVehicleRepository vehicleRepository, IManufacturerRepository manufacturerRepository)
+        public VehicleBusiness(IVehicleRepository vehicleRepository)
         {
             _vehicleRepository = vehicleRepository;
-            _manufacturerRepository = manufacturerRepository;
         }
 
         public void Delete(int id)
@@ -23,19 +21,13 @@ namespace VehicleManagement.Business.Implementations
         public Vehicle Get(int id)
         {
             Vehicle vehicle = _vehicleRepository.Get(id);
-            vehicle.Manufacturer = _manufacturerRepository.Get(vehicle.ManufacturerId);
             return vehicle;
         }
 
         public IEnumerable<Vehicle> GetAll()
         {
             IEnumerable<Vehicle> vehicles = _vehicleRepository.GetAll();
-            vehicles = vehicles.Where(v => v.IsActive == true);
-            foreach (Vehicle vehicle in vehicles)
-            {
-                vehicle.Manufacturer = _manufacturerRepository.Get(vehicle.ManufacturerId);
-            }
-            return vehicles;
+            return vehicles.Where(v => v.IsActive == true); //only vehicles which were not `deleted`
         }
 
         public void Save(Vehicle manufacturer)

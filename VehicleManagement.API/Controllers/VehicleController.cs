@@ -7,12 +7,12 @@ using VehicleManagement.Models;
 namespace VehicleManagement.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
-    public class VehicleController : ControllerBase
+    [Route("api/[controller]")]
+    public class VehiclesController : ControllerBase
     {
         private readonly IVehicleBusiness _vehicleBusiness;
 
-        public VehicleController(IVehicleBusiness vehicleBusiness)
+        public VehiclesController(IVehicleBusiness vehicleBusiness)
         {
             _vehicleBusiness = vehicleBusiness;
         }
@@ -35,6 +35,20 @@ namespace VehicleManagement.API.Controllers
         [HttpPut]
         [Route("{id}")]
         public void Update(int id, Vehicle vehicle)
+        {
+            //TODO
+        }
+
+        [HttpPost]
+        [Route("")]
+        public void Save(int id, Vehicle vehicle)
+        {
+            //TODO
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public void Delete(int id, Vehicle vehicle)
         {
             //TODO
         }

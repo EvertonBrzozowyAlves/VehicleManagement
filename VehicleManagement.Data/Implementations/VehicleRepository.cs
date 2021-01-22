@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Dapper;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
 using VehicleManagement.Models;
 
 namespace VehicleManagement.Data.Implementations
@@ -8,33 +11,65 @@ namespace VehicleManagement.Data.Implementations
         public Vehicle Get(int id)
         {
             string query = $@"SELECT 
-							     [{nameof(Vehicle.VehicleId)}]
-							    ,[{nameof(Vehicle.IsActive)}]
-							    ,[{nameof(Vehicle.RegisterDate)}]
-							    ,[{nameof(Vehicle.Plate)}]
-							    ,[{nameof(Vehicle.Model)}]
-							    ,[{nameof(Vehicle.ManufacturerId)}]
-						    FROM
-							    [VehicleManagement].[dbo].[Vehicles]
-						    WHERE
-							    [{nameof(Vehicle.VehicleId)}] = @{nameof(Vehicle.VehicleId)}";
+	                                  V.[{nameof(Vehicle.VehicleId)}]
+	                                , V.[{nameof(Vehicle.IsActive)}]
+	                                , V.[{nameof(Vehicle.RegisterDate)}]
+	                                , V.[{nameof(Vehicle.Plate)}]
+	                                , V.[{nameof(Vehicle.Model)}]
+	                                , M.[{nameof(Manufacturer.ManufacturerId)}]
+	                                , M.[{nameof(Manufacturer.IsActive)}]
+	                                , M.[{nameof(Manufacturer.RegisterDate)}]
+	                                , M.[{nameof(Manufacturer.Name)}]
+                                FROM 
+	                                VehicleManagement.dbo.Vehicles      V LEFT JOIN 
+                                    VehicleManagement.dbo.Manufacturers M ON V.{nameof(Manufacturer.ManufacturerId)} = M.{nameof(Manufacturer.ManufacturerId)}
+                                WHERE 
+                                    V.[{nameof(Vehicle.VehicleId)}] = @{nameof(Vehicle.VehicleId)}";
 
-            return GetById(query, new Vehicle() { VehicleId = id });
+            Vehicle vehicle;
+            using (SqlConnection connection = NewConnection())
+            {
+                vehicle = 
+                    connection.Query<Vehicle, Manufacturer, Vehicle>(query, (vehicle, manufacturer) =>
+                    {
+                        vehicle.Manufacturer = manufacturer;
+                        return vehicle;
+                    }, 
+                    splitOn: "ManufacturerId", 
+                    param: new Vehicle() { VehicleId = id })
+                    .First();
+            }
+            return vehicle;
         }
 
         public IEnumerable<Vehicle> GetAll()
         {
             string query = $@"SELECT 
-							     [{nameof(Vehicle.VehicleId)}]
-							    ,[{nameof(Vehicle.IsActive)}]
-							    ,[{nameof(Vehicle.RegisterDate)}]
-							    ,[{nameof(Vehicle.Plate)}]
-							    ,[{nameof(Vehicle.Model)}]
-							    ,[{nameof(Vehicle.ManufacturerId)}]
-						    FROM
-							    [VehicleManagement].[dbo].[Vehicles]";
+	                                  V.[{nameof(Vehicle.VehicleId)}]
+	                                , V.[{nameof(Vehicle.IsActive)}]
+	                                , V.[{nameof(Vehicle.RegisterDate)}]
+	                                , V.[{nameof(Vehicle.Plate)}]
+	                                , V.[{nameof(Vehicle.Model)}]
+	                                , M.[{nameof(Manufacturer.ManufacturerId)}]
+	                                , M.[{nameof(Manufacturer.IsActive)}]
+	                                , M.[{nameof(Manufacturer.RegisterDate)}]
+	                                , M.[{nameof(Manufacturer.Name)}]
+                                FROM 
+	                                VehicleManagement.dbo.Vehicles      V LEFT JOIN 
+                                    VehicleManagement.dbo.Manufacturers M ON V.{nameof(Manufacturer.ManufacturerId)} = M.{nameof(Manufacturer.ManufacturerId)}";
 
-            return GetAll(query);
+            IEnumerable<Vehicle> vehicles;
+            using (SqlConnection connection = NewConnection())
+            {
+                vehicles =
+                    connection.Query<Vehicle, Manufacturer, Vehicle>(query, (vehicle, manufacturer) =>
+                    {
+                        vehicle.Manufacturer = manufacturer;
+                        return vehicle;
+                    },
+                    splitOn: "ManufacturerId");
+            }
+            return vehicles;
         }
 
         public void Save(Vehicle vehicle)
@@ -43,14 +78,12 @@ namespace VehicleManagement.Data.Implementations
                                    ([{nameof(Vehicle.IsActive)}]
                                    ,[{nameof(Vehicle.RegisterDate)}]
                                    ,[{nameof(Vehicle.Plate)}]
-                                   ,[{nameof(Vehicle.Model)}]
-                                   ,[{nameof(Vehicle.ManufacturerId)}])
+                                   ,[{nameof(Vehicle.Model)}])
                              VALUES
                                    (@{nameof(Vehicle.IsActive)}
                                    ,@{nameof(Vehicle.RegisterDate)}
                                    ,@{nameof(Vehicle.Plate)}
-                                   ,@{nameof(Vehicle.Model)}
-                                   ,@{nameof(Vehicle.ManufacturerId)})";
+                                   ,@{nameof(Vehicle.Model)})";
 
             ExecuteNonQuery(query, vehicle);
         }
@@ -62,8 +95,8 @@ namespace VehicleManagement.Data.Implementations
                                     ,[{nameof(Vehicle.RegisterDate)}] = @{nameof(Vehicle.RegisterDate)}
                                     ,[{nameof(Vehicle.Plate)}] = @{nameof(Vehicle.Plate)}
                                     ,[{nameof(Vehicle.Model)}] = @{nameof(Vehicle.Model)}
-                                    ,[{nameof(Vehicle.ManufacturerId)}] = @{nameof(Vehicle.ManufacturerId)}
-                              WHERE [{nameof(Vehicle.VehicleId)}] = @{nameof(Vehicle.VehicleId)}";
+                              WHERE 
+                                    [{nameof(Vehicle.VehicleId)}] = @{nameof(Vehicle.VehicleId)}";
 
             ExecuteNonQuery(query, vehicle);
         }

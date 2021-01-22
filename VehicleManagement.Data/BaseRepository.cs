@@ -34,13 +34,6 @@ namespace VehicleManagement.Data
 				return result;
 			}
 		}
-		public void ExecuteNonQuery(string query)
-		{
-			using (var connection = this.NewConnection())
-			{
-				connection.Execute(query);
-			}
-		}
 
 		public void ExecuteNonQuery(string query, object param)
         {
