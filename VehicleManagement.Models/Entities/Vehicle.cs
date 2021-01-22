@@ -1,6 +1,8 @@
-﻿namespace VehicleManagement.Models
+﻿using System;
+
+namespace VehicleManagement.Models
 {
-    public class Vehicle : Base
+    public class Vehicle : Base, IComparable<Vehicle>
     {
         public Vehicle() 
         {
@@ -16,5 +18,14 @@
         public string Plate { get; set; }
         public string Model { get; set; }
         public Manufacturer Manufacturer { get; set; }
+
+        public int CompareTo(Vehicle other)
+        {
+            if (other != null)
+            {
+                return this.Plate.CompareTo(other.Plate);
+            }
+            return -1;
+        }
     }
 }

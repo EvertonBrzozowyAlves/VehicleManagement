@@ -100,10 +100,5 @@ namespace VehicleManagement.Data.Implementations
 
             ExecuteNonQuery(query, vehicle);
         }
-        public void Delete(int id)
-        {
-            string query = $@"UPDATE [VehicleManagement].[dbo].[Vehicles] SET [{nameof(Vehicle.IsActive)}] = 0 WHERE [{nameof(Vehicle.VehicleId)}] = @{nameof(Vehicle.VehicleId)}";
-            ExecuteNonQuery(query, new Vehicle() { VehicleId = id });
-        }
     }
 }

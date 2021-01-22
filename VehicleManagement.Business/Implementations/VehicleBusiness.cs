@@ -15,7 +15,10 @@ namespace VehicleManagement.Business.Implementations
 
         public void Delete(int id)
         {
-            throw new System.NotImplementedException();
+            Vehicle vehicle = _vehicleRepository.Get(id);
+            vehicle.IsActive = false; //avoid losing data
+            Update(vehicle); 
+
         }
 
         public Vehicle Get(int id)
@@ -30,14 +33,15 @@ namespace VehicleManagement.Business.Implementations
             return vehicles.Where(v => v.IsActive == true); //only vehicles which were not `deleted`
         }
 
-        public void Save(Vehicle manufacturer)
+        public void Save(Vehicle vehicle)
         {
-            throw new System.NotImplementedException();
+            _vehicleRepository.Save(vehicle);
         }
 
-        public void Update(Vehicle manufacturer)
+        public void Update(Vehicle vehicle)
         {
-            throw new System.NotImplementedException();
+            _vehicleRepository.Update(vehicle);
+
         }
     }
 }
