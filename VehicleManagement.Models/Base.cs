@@ -9,8 +9,7 @@ namespace VehicleManagement.Models
             RegisterDate = DateTime.Now;
         }
 
-        public int Id { get; set; }
-        public bool Active { get; set; }
+        public bool IsActive { get; set; }
         public DateTime RegisterDate { get; set; }
 
     }

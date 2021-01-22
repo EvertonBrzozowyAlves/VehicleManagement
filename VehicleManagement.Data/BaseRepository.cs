@@ -2,10 +2,11 @@
 using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
+using VehicleManagement.Models;
 
 namespace VehicleManagement.Data
 {
-    public class RepositoryBase<T>
+    public class BaseRepository<T> where T : Base
     {
 		protected string _connectionString = System.Environment.GetEnvironmentVariable("CONNECTION_STRING");
 
@@ -16,7 +17,7 @@ namespace VehicleManagement.Data
 			return sqlConnection;
 		}
 
-		public T Get(string query, object param)
+		public T GetById(string query, object param)
 		{
 			using (var connection = this.NewConnection())
 			{
@@ -25,13 +26,27 @@ namespace VehicleManagement.Data
 			}
 		}
 
-		public List<T> List(string query)
+		public IEnumerable<T> GetAll(string query)
 		{
 			using (var connection = this.NewConnection())
 			{
 				var result = connection.Query<T>(query);
-				var objectList = result != null ? result.ToList() : null;
-				return objectList;
+				return result;
+			}
+		}
+		public void ExecuteNonQuery(string query)
+		{
+			using (var connection = this.NewConnection())
+			{
+				connection.Execute(query);
+			}
+		}
+
+		public void ExecuteNonQuery(string query, object param)
+        {
+			using (var connection = this.NewConnection())
+			{
+				connection.Execute(query, param);
 			}
 		}
 	}

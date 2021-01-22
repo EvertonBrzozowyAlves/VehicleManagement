@@ -3,8 +3,8 @@ GO
 IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Vehicles' and xtype='U')
 	BEGIN
 		CREATE TABLE Vehicles (
-			Id INT PRIMARY KEY IDENTITY (1, 1),
-			Active BIT NOT NULL,
+			VehicleId INT PRIMARY KEY IDENTITY (1, 1),
+			IsActive BIT NOT NULL,
 			RegisterDate DATETIME NOT NULL,
 			Plate NVARCHAR(7) NOT NULL,
 			Model NVARCHAR(MAX) NOT NULL,
@@ -12,7 +12,7 @@ IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Vehicles' and xtype='U')
 		)
 	END
 
-INSERT INTO [Vehicles](ManufacturerId, Plate, RegisterDate, Active, Model) VALUES 
+INSERT INTO [Vehicles](ManufacturerId, Plate, RegisterDate, IsActive, Model) VALUES 
  (1, 'AAA0A00', GETDATE(), 1, 'T-Cross')
 ,(1, 'AAA0A01', GETDATE(), 1, 'Gol')
 ,(1, 'AAA0A02', GETDATE(), 1, 'Polo')

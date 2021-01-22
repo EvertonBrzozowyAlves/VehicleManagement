@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using VehicleManagement.Business;
+using VehicleManagement.Business.Implementations;
 using VehicleManagement.Data;
+using VehicleManagement.Data.Implementations;
 
 namespace VehicleManagement.Configuration
 {
@@ -13,6 +15,7 @@ namespace VehicleManagement.Configuration
 		public static void RegisterDependencies(this IServiceCollection services)
 		{
 			services.AddSingleton<IVehicleRepository, VehicleRepository>();
+			services.AddSingleton<IManufacturerRepository, ManufacturerRepository>();
 			services.AddSingleton<IVehicleBusiness, VehicleBusiness>();
 		}
 	}

@@ -2,16 +2,16 @@ USE [VehicleManagement]
 GO
 IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Manufacturer' and xtype='U')
 	BEGIN
-		CREATE TABLE Manufacturer (
-			Id INT PRIMARY KEY IDENTITY (1, 1),
-			Active BIT NOT NULL,
+		CREATE TABLE Manufacturers (
+			ManufacturerId INT PRIMARY KEY IDENTITY (1, 1),
+			IsActive BIT NOT NULL,
 			RegisterDate DATETIME NOT NULL,
-			Name NVARCHAR(MAX) NOT NULL
+			[Name] NVARCHAR(MAX) NOT NULL
 		)
 	END
 GO
 
-INSERT INTO [Manufacturer] ([Active], [RegisterDate], [Name])  VALUES
+INSERT INTO [Manufacturers] ([IsActive], [RegisterDate], [Name])  VALUES
  (1, GETDATE(), 'Volkswagen')
 ,(1, GETDATE(), 'Toyota')
 ,(1, GETDATE(), 'Renault')
