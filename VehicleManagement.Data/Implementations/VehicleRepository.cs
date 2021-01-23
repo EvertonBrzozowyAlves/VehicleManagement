@@ -13,13 +13,11 @@ namespace VehicleManagement.Data.Implementations
             string query = $@"SELECT 
 	                                  V.[{nameof(Vehicle.VehicleId)}]
 	                                , V.[{nameof(Vehicle.IsActive)}]
-	                                , V.[{nameof(Vehicle.RegisterDate)}]
 	                                , V.[{nameof(Vehicle.Plate)}]
 	                                , V.[{nameof(Vehicle.Model)}]
 	                                , V.[{nameof(Vehicle.ManufacturerId)}]
 	                                , M.[{nameof(Manufacturer.ManufacturerId)}]
 	                                , M.[{nameof(Manufacturer.IsActive)}]
-	                                , M.[{nameof(Manufacturer.RegisterDate)}]
 	                                , M.[{nameof(Manufacturer.Name)}]
                                 FROM 
 	                                VehicleManagement.dbo.Vehicles      V LEFT JOIN 
@@ -52,12 +50,10 @@ namespace VehicleManagement.Data.Implementations
             string query = $@"SELECT 
 	                                  V.[{nameof(Vehicle.VehicleId)}]
 	                                , V.[{nameof(Vehicle.IsActive)}]
-	                                , V.[{nameof(Vehicle.RegisterDate)}]
 	                                , V.[{nameof(Vehicle.Plate)}]
 	                                , V.[{nameof(Vehicle.Model)}]
 	                                , M.[{nameof(Manufacturer.ManufacturerId)}]
 	                                , M.[{nameof(Manufacturer.IsActive)}]
-	                                , M.[{nameof(Manufacturer.RegisterDate)}]
 	                                , M.[{nameof(Manufacturer.Name)}]
                                 FROM 
 	                                VehicleManagement.dbo.Vehicles      V LEFT JOIN 

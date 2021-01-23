@@ -10,7 +10,6 @@ namespace VehicleManagement.Data.Implementations
 			string sql = $@"SELECT 
 							 [{nameof(Manufacturer.ManufacturerId)}]
 							,[{nameof(Vehicle.IsActive)}]
-							,[{nameof(Vehicle.RegisterDate)}]
 							,[{nameof(Manufacturer.Name)}]
 						FROM
 							[VehicleManagement].[dbo].[Manufacturers]
@@ -25,7 +24,6 @@ namespace VehicleManagement.Data.Implementations
 			string sql = $@"SELECT 
 							 [{nameof(Manufacturer.ManufacturerId)}]
 							,[{nameof(Vehicle.IsActive)}]
-							,[{nameof(Vehicle.RegisterDate)}]
 							,[{nameof(Manufacturer.Name)}]
 						FROM
 							[VehicleManagement].[dbo].[Manufacturers]";

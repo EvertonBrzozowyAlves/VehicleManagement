@@ -17,35 +17,24 @@ namespace VehicleManagement.UI.Controllers
         public IActionResult Edit(int id)
         {
             if(id == 0)
-            {
                 return View(new Vehicle());
-            }
             Vehicle vehicle = VehicleService.Get(id);
             return View(vehicle);
         }
 
+        [HttpPost]
         public void Delete(int id)
         {
             VehicleService.Delete(id);
-            
         }
 
-        public IActionResult Save([FromBody] Vehicle vehicle)
+        [HttpPost]
+        public void Save([FromBody] Vehicle vehicle)
         {
-            if (!ModelState.IsValid)
-            {
-                ViewBag.Errors = ModelState;
-                return View("Edit", vehicle);
-            }
             if (vehicle.VehicleId > 0)
-            {
                 VehicleService.Update(vehicle);
-            }
             else
-            {
                 VehicleService.Save(vehicle);
-            }
-            return RedirectToAction("Index");
         }
     }
 }

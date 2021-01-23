@@ -1,8 +1,8 @@
 ﻿using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using VehicleManagement.Models;
 
@@ -24,9 +24,12 @@ namespace VehicleManagement.UI.Services
             return response;
         }
 
-        public static async Task<string> Post(string url, Base model)
+        public static async Task<string> Post(string url, Vehicle vehicle, JsonSerializerOptions serializerOptions = null)
         {
-            HttpResponseMessage resultado = await _client.PostAsJsonAsync(url, model);
+            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            var teste = JsonSerializer.Serialize<Vehicle>(vehicle, serializerOptions);
+            HttpResponseMessage resultado = _client.PostAsync(url, new StringContent(teste, Encoding.UTF8, "application/json")).Result;
+
             if (resultado.StatusCode != System.Net.HttpStatusCode.OK)
             {
                 throw new HttpRequestException($"{resultado.StatusCode}-{resultado.RequestMessage}");
@@ -37,17 +40,11 @@ namespace VehicleManagement.UI.Services
             return response;
         }
 
-        public static async Task<string> Put(string url, Base model, JsonSerializerOptions serializerOptions = null) //TODO: FIX!
+        public static async Task<string> Put(string url, Vehicle vehicle, JsonSerializerOptions serializerOptions = null)
         {
-            _client.DefaultRequestHeaders.Accept.Clear();
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Put, url);
-            request.Content = new StringContent(model.ToString(), Encoding.UTF8, "application/json");
-
-            
-
-            HttpResponseMessage resultado = _client.SendAsync(request).Result;      
+            var teste = JsonSerializer.Serialize<Vehicle>(vehicle, serializerOptions);
+            HttpResponseMessage resultado = _client.PutAsync(url, new StringContent(teste, Encoding.UTF8, "application/json")).Result;
 
             if (resultado.StatusCode != System.Net.HttpStatusCode.OK)
             {

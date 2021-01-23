@@ -4,7 +4,6 @@
 }
 
 <h2>Veículos</h2>
-<a asp-controller="Vehicles" asp-action="Edit" asp-route-id="0" class="btn btn-success" role="button">Novo Veículo</a>
 <table class="table">
     <caption>Lista de Veículos</caption>
     <thead class="thead-dark">
@@ -26,12 +25,45 @@
                 <td>@vehicle.Manufacturer.Name</td>
                 <td>
                     <a asp-controller="Vehicles" asp-action="Edit" asp-route-id="@vehicle.VehicleId" class="btn btn-warning" role="button">Alterar</a>
-                    <a asp-controller="Vehicles" asp-action="Delete" asp-route-id="@vehicle.VehicleId" class="btn btn-danger" role="button">Excluir</a>
+                    <a id="@vehicle.VehicleId" name="delete" onclick="confirmDelete(@vehicle.VehicleId)" class="btn btn-danger" role="button">Excluir</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
 <script>
-
+    function confirmDelete(vehicleId) {
+        bootbox.confirm("Confirma a exclusão do veículo?", function (confirmed) {
+            if (confirmed) {
+                deleteVehicle(vehicleId);
+            }
+        });
+    }
+    function deleteVehicle(vehicleId) {
+        fetch(`https://localhost:44367/Vehicles/Delete?id=${vehicleId}`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+        })
+        .then(resp => {
+            if (!resp.ok) {
+                const message = `An error has occured: ${resp.status}`
+                console.error(message)
+            }
+            bootbox.alert({
+                message: `Veículo excluído com sucesso!`,
+                callback: function () {
+                    setTimeout(function () {
+                        window.location = window.location.origin + '/Vehicles/Index';
+                    }, 1000);
+                }
+            })
+            console.log(resp)
+        })
+        .catch(err => {
+            console.error(err)
+        })
+    }
 </script>

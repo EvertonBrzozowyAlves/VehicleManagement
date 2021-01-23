@@ -8,27 +8,22 @@
         <div class="col-md-12 order-md-1">
             <h3 class="mb-3">Dados do Veículo</h3>
             <hr class="mb-4">
-
             <form class="needs-validation" action="@Url.Action("Save", "Vehicles")" method="post" novalidate>
-                <input type="hidden" name="VehicleId" id="VehicleId" value="@Model.VehicleId"/>
+                <input type="hidden" name="VehicleId" id="VehicleId" value="@Model.VehicleId" />
                 <div class="mb-3">
                     <label for="plate">Placa</label>
                     <div class="input-group">
                         <input type="text" class="form-control" id="plate" name="Plate" placeholder="AAA0000" value="@Model.Plate" required />
                         <div class="invalid-feedback" id="plateFeedback">
-                            @Html.ValidationMessageFor(x => x.Plate)
                         </div>
                     </div>
                 </div>
-
                 <div class="mb-3">
                     <label for="model">Modelo</label>
                     <input type="text" class="form-control" id="model" name="Model" placeholder="Onix" value="@Model.Model">
                     <div class="invalid-feedback" id="modelFeedback">
-                        @Html.ValidationMessageFor(x => x.Model)
                     </div>
                 </div>
-
                 <div class="mb-3">
                     <label for="manufacturer"></label>
                     <select class="custom-select d-block w-100" id="manufacturer" name="ManufacturerId" required>
@@ -51,9 +46,8 @@
                 </div>
 
                 <hr class="mb-4">
-
-                <button class="btn btn-primary btn-lg btn-block" id="btnSubmit" type="submit">Salvar Alterações</button>
-
+                <a asp-controller="Vehicles" asp-action="Index" class="btn btn-secondary btn-lg" role="button">Voltar</a>
+                <button class="btn btn-primary btn-lg" id="btnSubmit" type="submit">Salvar Alterações</button>
             </form>
         </div>
     </div>
@@ -63,7 +57,6 @@
         const btnSubmit = document.getElementById("btnSubmit");
         btnSubmit.addEventListener("click", (event) => {
             event.preventDefault();
-            debugger;
             const vehicle = {
                 VehicleId: document.getElementById("VehicleId").value,
                 Plate: document.getElementById("plate").value,
@@ -74,10 +67,33 @@
                     Name: document.getElementById("manufacturer").selectedOptions[0].text
                 }
             };
-            debugger;
-            let result = fetchPost(vehicle).catch(err => console.log(err));
-            console.log(result);
 
+            fetch("https://localhost:44367/Vehicles/Save", {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(vehicle)
+            })
+            .then(resp => {
+                if (!resp.ok) {
+                    const message = `An error has occured: ${resp.status}`
+                    console.error(message)
+                }
+                console.log(resp)
+                bootbox.alert({
+                    message: `Veículo salvo com sucesso!`,
+                    callback: function () {
+                        setTimeout(function () {
+                            window.location = window.location.origin + '/Vehicles/Index';
+                        }, 1000);
+                    }
+                })
+            })
+            .catch(err => {
+                console.error(err)
+            })
         })
     }
 </script>
