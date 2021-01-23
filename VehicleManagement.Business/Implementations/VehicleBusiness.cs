@@ -17,8 +17,7 @@ namespace VehicleManagement.Business.Implementations
         {
             Vehicle vehicle = _vehicleRepository.Get(id);
             vehicle.IsActive = false; //avoid losing data
-            Update(vehicle); 
-
+            _vehicleRepository.Update(vehicle);
         }
 
         public Vehicle Get(int id)
@@ -40,8 +39,8 @@ namespace VehicleManagement.Business.Implementations
 
         public void Update(Vehicle vehicle)
         {
+            vehicle.IsActive = true;
             _vehicleRepository.Update(vehicle);
-
         }
     }
 }

@@ -12,8 +12,10 @@ namespace VehicleManagement.Models
         {
             Name = name;
         }
+
         public int ManufacturerId { get; set; }
         public string Name { get; set; }
+
 
         public int CompareTo(Manufacturer other)
         {

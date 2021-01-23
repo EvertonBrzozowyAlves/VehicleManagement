@@ -22,7 +22,7 @@ namespace VehicleManagement.API.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public ActionResult Get(int id)
+        public ActionResult<Vehicle> Get(int id)
         {
             try
             {
@@ -31,37 +31,41 @@ namespace VehicleManagement.API.Controllers
             }
             catch (Exception e)
             {
-                return StatusCode(500, e);
+                return StatusCode(500, e.Message);
             }
         }
 
         [HttpGet]
         [Route("")]
-        public ActionResult GetAll()
+        public ActionResult <IEnumerable<Vehicle>> GetAll()
         {
             try
             {
                 IEnumerable<Vehicle> vehicles = _vehicleBusiness.GetAll();
-                return Ok(vehicles.ToList());
+                return Ok(vehicles);
             }
             catch (Exception e)
             {
-                return StatusCode(500, e);
+                return StatusCode(500, e.Message);
             }
         }
 
         [HttpPut]
         [Route("{id}")]
-        public ActionResult Update(int id, Vehicle vehicle)
+        public ActionResult Update(Vehicle vehicle)
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
                 _vehicleBusiness.Update(vehicle);
                 return Ok();
             }
             catch (Exception e)
             {
-                return StatusCode(500, e);
+                return StatusCode(500, e.Message);
             }
         }
 
@@ -76,7 +80,7 @@ namespace VehicleManagement.API.Controllers
             }
             catch (Exception e)
             {
-                return StatusCode(500, e);
+                return StatusCode(500, e.Message);
             }
         }
 
@@ -91,7 +95,7 @@ namespace VehicleManagement.API.Controllers
             }
             catch (Exception e)
             {
-                return StatusCode(500, e);
+                return StatusCode(500, e.Message);
             }
         }
     }

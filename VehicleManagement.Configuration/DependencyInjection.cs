@@ -14,9 +14,10 @@ namespace VehicleManagement.Configuration
 		/// <param name="services"></param>
 		public static void RegisterDependencies(this IServiceCollection services)
 		{
-			services.AddSingleton<IVehicleRepository, VehicleRepository>();
-			services.AddSingleton<IManufacturerRepository, ManufacturerRepository>();
 			services.AddSingleton<IVehicleBusiness, VehicleBusiness>();
+			services.AddSingleton<IVehicleRepository, VehicleRepository>();
+			services.AddSingleton<IManufacturerBusiness, ManufacturerBusiness>();
+			services.AddSingleton<IManufacturerRepository, ManufacturerRepository>();
 		}
 	}
 }

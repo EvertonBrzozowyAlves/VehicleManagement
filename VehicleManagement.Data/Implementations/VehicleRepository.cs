@@ -16,6 +16,7 @@ namespace VehicleManagement.Data.Implementations
 	                                , V.[{nameof(Vehicle.RegisterDate)}]
 	                                , V.[{nameof(Vehicle.Plate)}]
 	                                , V.[{nameof(Vehicle.Model)}]
+	                                , V.[{nameof(Vehicle.ManufacturerId)}]
 	                                , M.[{nameof(Manufacturer.ManufacturerId)}]
 	                                , M.[{nameof(Manufacturer.IsActive)}]
 	                                , M.[{nameof(Manufacturer.RegisterDate)}]
@@ -75,12 +76,12 @@ namespace VehicleManagement.Data.Implementations
         public void Save(Vehicle vehicle)
         {
             string query = $@"INSERT INTO [VehicleManagement].[dbo].[Vehicles]
-                                   ([{nameof(Vehicle.IsActive)}]
-                                   ,[{nameof(Vehicle.Plate)}]
+                                   ([{nameof(Vehicle.Plate)}]
+                                   ,[{nameof(Vehicle.Manufacturer.ManufacturerId)}]
                                    ,[{nameof(Vehicle.Model)}])
                              VALUES
-                                   (@{nameof(Vehicle.IsActive)}
-                                   ,@{nameof(Vehicle.Plate)}
+                                   (@{nameof(Vehicle.Plate)}
+                                   ,@{nameof(Vehicle.Manufacturer.ManufacturerId)}
                                    ,@{nameof(Vehicle.Model)})";
 
             ExecuteNonQuery(query, vehicle);
@@ -88,11 +89,14 @@ namespace VehicleManagement.Data.Implementations
 
         public void Update(Vehicle vehicle)
         {
-            string query = $@"UPDATE [VehicleManagement].[dbo].[Vehicles] SET 
+            string query = $@"UPDATE    
+                                    [VehicleManagement].[dbo].[Vehicles] 
+                                SET 
                                      [{nameof(Vehicle.IsActive)}] = @{nameof(Vehicle.IsActive)}
                                     ,[{nameof(Vehicle.Plate)}] = @{nameof(Vehicle.Plate)}
                                     ,[{nameof(Vehicle.Model)}] = @{nameof(Vehicle.Model)}
-                              WHERE 
+                                    ,[{nameof(Vehicle.Manufacturer.ManufacturerId)}] = @{nameof(Vehicle.Manufacturer.ManufacturerId)}
+                                WHERE 
                                     [{nameof(Vehicle.VehicleId)}] = @{nameof(Vehicle.VehicleId)}";
 
             ExecuteNonQuery(query, vehicle);
