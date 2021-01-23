@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using VehicleManagement.Business;
 using VehicleManagement.Models;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace VehicleManagement.API.Controllers
 {
@@ -19,38 +22,77 @@ namespace VehicleManagement.API.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public Vehicle Get(int id)
+        public ActionResult Get(int id)
         {
-            return _vehicleBusiness.Get(id);
+            try
+            {
+                Vehicle vehicle = _vehicleBusiness.Get(id);
+                return Ok(vehicle);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e);
+            }
         }
 
         [HttpGet]
         [Route("")]
-        public List<Vehicle> GetAll()
+        public ActionResult GetAll()
         {
-            IEnumerable<Vehicle> vehicles = _vehicleBusiness.GetAll();
-            return vehicles.ToList();
+            try
+            {
+                IEnumerable<Vehicle> vehicles = _vehicleBusiness.GetAll();
+                return Ok(vehicles.ToList());
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e);
+            }
         }
 
         [HttpPut]
         [Route("{id}")]
-        public void Update(int id, Vehicle vehicle)
+        public ActionResult Update(int id, Vehicle vehicle)
         {
-            //TODO
+            try
+            {
+                _vehicleBusiness.Update(vehicle);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e);
+            }
         }
 
         [HttpPost]
         [Route("")]
-        public void Save(int id, Vehicle vehicle)
+        public ActionResult Save(Vehicle vehicle)
         {
-            //TODO
+            try
+            {
+                _vehicleBusiness.Save(vehicle);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e);
+            }
         }
 
         [HttpDelete]
         [Route("{id}")]
-        public void Delete(int id, Vehicle vehicle)
+        public ActionResult Delete(int id)
         {
-            //TODO
+            try
+            {
+                _vehicleBusiness.Delete(id);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e);
+            }
         }
     }
 }

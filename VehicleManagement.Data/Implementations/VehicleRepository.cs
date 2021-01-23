@@ -76,12 +76,10 @@ namespace VehicleManagement.Data.Implementations
         {
             string query = $@"INSERT INTO [VehicleManagement].[dbo].[Vehicles]
                                    ([{nameof(Vehicle.IsActive)}]
-                                   ,[{nameof(Vehicle.RegisterDate)}]
                                    ,[{nameof(Vehicle.Plate)}]
                                    ,[{nameof(Vehicle.Model)}])
                              VALUES
                                    (@{nameof(Vehicle.IsActive)}
-                                   ,@{nameof(Vehicle.RegisterDate)}
                                    ,@{nameof(Vehicle.Plate)}
                                    ,@{nameof(Vehicle.Model)})";
 
@@ -92,7 +90,6 @@ namespace VehicleManagement.Data.Implementations
         {
             string query = $@"UPDATE [VehicleManagement].[dbo].[Vehicles] SET 
                                      [{nameof(Vehicle.IsActive)}] = @{nameof(Vehicle.IsActive)}
-                                    ,[{nameof(Vehicle.RegisterDate)}] = @{nameof(Vehicle.RegisterDate)}
                                     ,[{nameof(Vehicle.Plate)}] = @{nameof(Vehicle.Plate)}
                                     ,[{nameof(Vehicle.Model)}] = @{nameof(Vehicle.Model)}
                               WHERE 

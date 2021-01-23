@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using VehicleManagement.Models;
 
-namespace VehicleManagement.Data
+namespace VehicleManagement.Business
 {
-    public interface IManufacturerRepository
+    public interface IManufacturerBusiness
     {
-        public Manufacturer Get(int id);
         public IEnumerable<Manufacturer> GetAll();
     }
 }

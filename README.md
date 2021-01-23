@@ -1,10 +1,11 @@
-# VEHICLE MANAGEMENT  
-Projeto que permite realizar um CRUD de veÌculos, comunicando uma aplicaÁ„o web MCV com uma API.
+# Vehicle Management
 
+Projeto que permite realizar um CRUD de ve√≠culos, comunicando uma aplica√ß√£o web MCV com uma API, ambas constru√≠das com C#.
 
 ## Tecnologias
-* Swagger  
-* Dapper  
-* DotEnv
+
+- Swagger
+- Dapper
+- DotEnv
 
 ## Como utilizar

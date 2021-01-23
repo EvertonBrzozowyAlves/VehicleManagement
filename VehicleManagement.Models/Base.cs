@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 
 namespace VehicleManagement.Models
 {
@@ -6,11 +7,13 @@ namespace VehicleManagement.Models
     {
         public Base()
         {
-            RegisterDate = DateTime.Now;
         }
 
+        [JsonIgnore]
         public bool IsActive { get; set; }
-        public DateTime RegisterDate { get; set; }
+
+        [JsonIgnore]
+        public DateTime RegisterDate { get; set; } //TODO: consider a private set or expand to validate
 
     }
 }

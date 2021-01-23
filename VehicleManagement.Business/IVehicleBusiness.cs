@@ -7,8 +7,8 @@ namespace VehicleManagement.Business
     {
         public Vehicle Get(int id);
         public IEnumerable<Vehicle> GetAll();
-        public void Save(Vehicle manufacturer);
+        public void Save(Vehicle vehicle);
         public void Delete(int id);
-        public void Update(Vehicle manufacturer);
+        public void Update(Vehicle vehicle);
     }
 }

@@ -7,7 +7,7 @@ namespace VehicleManagement.Data.Implementations
     {
 		public Manufacturer Get(int id)
 		{
-			return GetById($@"SELECT 
+			string sql = $@"SELECT 
 							 [{nameof(Manufacturer.ManufacturerId)}]
 							,[{nameof(Vehicle.IsActive)}]
 							,[{nameof(Vehicle.RegisterDate)}]
@@ -15,19 +15,23 @@ namespace VehicleManagement.Data.Implementations
 						FROM
 							[VehicleManagement].[dbo].[Manufacturers]
 						WHERE
-							[{nameof(Manufacturer.ManufacturerId)}] = @{nameof(Manufacturer.ManufacturerId)}"
-						, new Manufacturer() { ManufacturerId = id });
+							[{nameof(Manufacturer.ManufacturerId)}] = @{nameof(Manufacturer.ManufacturerId)}";
+			Manufacturer manufacturer =  GetById(sql, new Manufacturer() { ManufacturerId = id });
+			return manufacturer;
 		}
 
 		public IEnumerable<Manufacturer> GetAll()
 		{
-			return GetAll($@"SELECT 
+			string sql = $@"SELECT 
 							 [{nameof(Manufacturer.ManufacturerId)}]
 							,[{nameof(Vehicle.IsActive)}]
 							,[{nameof(Vehicle.RegisterDate)}]
 							,[{nameof(Manufacturer.Name)}]
 						FROM
-							[VehicleManagement].[dbo].[Manufacturers]");
+							[VehicleManagement].[dbo].[Manufacturers]";
+
+			IEnumerable<Manufacturer> manufacturers = GetAll(sql);
+			return manufacturers;
 		}
 	}
 }
