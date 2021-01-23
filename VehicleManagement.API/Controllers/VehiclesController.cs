@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
 using VehicleManagement.Business;
 using VehicleManagement.Models;
 using System.Text.Json;
@@ -75,6 +74,10 @@ namespace VehicleManagement.API.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
                 _vehicleBusiness.Save(vehicle);
                 return Ok();
             }

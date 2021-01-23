@@ -1,0 +1,33 @@
+﻿@model IEnumerable<VehicleManagement.Models.Vehicle>
+
+<h2>Veículos</h2>
+<table class="table">
+    <caption>Lista de Veículos</caption>
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Placa</th>
+            <th scope="col">Modelo</th>
+            <th scope="col">Montadora</th>
+            <th scope="col">Operações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (VehicleManagement.Models.Vehicle vehicle in Model)
+        {
+            <tr>
+                <th scope="row">@vehicle.VehicleId</th>
+                <td>@vehicle.Plate</td>
+                <td>@vehicle.Model</td>
+                <td>@vehicle.Manufacturer.Name</td>
+                <td>
+                    <a asp-controller="Vehicles" asp-action="Get" asp-route-id="@vehicle.VehicleId" class="btn btn-warning" role="button">Alterar</a>
+                    <a asp-controller="Vehicles" asp-action="Delete" asp-route-id="@vehicle.VehicleId" class="btn btn-danger" role="button">Excluir</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script>
+
+</script>

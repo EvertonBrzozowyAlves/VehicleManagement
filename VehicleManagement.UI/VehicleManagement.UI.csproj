@@ -4,4 +4,8 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\VehicleManagement.Models\VehicleManagement.Models.csproj" />
+  </ItemGroup>
+
 </Project>
