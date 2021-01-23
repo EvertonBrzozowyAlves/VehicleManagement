@@ -51,7 +51,7 @@ namespace VehicleManagement.API.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public ActionResult Update(Vehicle vehicle)
+        public ActionResult Update([FromBody] Vehicle vehicle)
         {
             try
             {
@@ -70,7 +70,7 @@ namespace VehicleManagement.API.Controllers
 
         [HttpPost]
         [Route("")]
-        public ActionResult Save(Vehicle vehicle)
+        public ActionResult Save([FromBody] Vehicle vehicle)
         {
             try
             {

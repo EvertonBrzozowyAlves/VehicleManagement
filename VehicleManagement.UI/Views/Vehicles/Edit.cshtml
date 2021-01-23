@@ -1,1 +1,83 @@
 ﻿@model VehicleManagement.Models.Vehicle
+@{
+    ViewBag.Title = Model.Plate;
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 order-md-1">
+            <h3 class="mb-3">Dados do Veículo</h3>
+            <hr class="mb-4">
+
+            <form class="needs-validation" action="@Url.Action("Save", "Vehicles")" method="post" novalidate>
+                <input type="hidden" name="VehicleId" id="VehicleId" value="@Model.VehicleId"/>
+                <div class="mb-3">
+                    <label for="plate">Placa</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="plate" name="Plate" placeholder="AAA0000" value="@Model.Plate" required />
+                        <div class="invalid-feedback" id="plateFeedback">
+                            @Html.ValidationMessageFor(x => x.Plate)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="model">Modelo</label>
+                    <input type="text" class="form-control" id="model" name="Model" placeholder="Onix" value="@Model.Model">
+                    <div class="invalid-feedback" id="modelFeedback">
+                        @Html.ValidationMessageFor(x => x.Model)
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="manufacturer"></label>
+                    <select class="custom-select d-block w-100" id="manufacturer" name="ManufacturerId" required>
+                        <option value="0">Selecione a Montadora...</option>
+                        @foreach (VehicleManagement.Models.Manufacturer manufacturer in VehicleManagement.UI.Services.ManufacturerService.GetAll())
+                        {
+                            if (manufacturer.ManufacturerId == Model.ManufacturerId)
+                            {
+                                <option value="@manufacturer.ManufacturerId" selected>@manufacturer.Name</option>
+                            }
+                            else
+                            {
+                                <option value="@manufacturer.ManufacturerId">@manufacturer.Name</option>
+                            }
+                        }
+                    </select>
+                    <div class="invalid-feedback" id="manufacturerFeedback">
+                        É necessário selecionar uma montadora.
+                    </div>
+                </div>
+
+                <hr class="mb-4">
+
+                <button class="btn btn-primary btn-lg btn-block" id="btnSubmit" type="submit">Salvar Alterações</button>
+
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    window.onload = () => {
+        const btnSubmit = document.getElementById("btnSubmit");
+        btnSubmit.addEventListener("click", (event) => {
+            event.preventDefault();
+            debugger;
+            const vehicle = {
+                VehicleId: document.getElementById("VehicleId").value,
+                Plate: document.getElementById("plate").value,
+                Model: document.getElementById("model").value,
+                ManufacturerId: document.getElementById("manufacturer").selectedOptions[0].value,
+                Manufacturer: {
+                    ManufacturerId: document.getElementById("manufacturer").selectedOptions[0].value,
+                    Name: document.getElementById("manufacturer").selectedOptions[0].text
+                }
+            };
+            debugger;
+            let result = fetchPost(vehicle).catch(err => console.log(err));
+            console.log(result);
+
+        })
+    }
+</script>

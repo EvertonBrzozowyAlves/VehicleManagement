@@ -1,6 +1,10 @@
 ﻿@model IEnumerable<VehicleManagement.Models.Vehicle>
+@{
+    ViewBag.Title = "Lista de Veículos";
+}
 
 <h2>Veículos</h2>
+<a asp-controller="Vehicles" asp-action="Edit" asp-route-id="0" class="btn btn-success" role="button">Novo Veículo</a>
 <table class="table">
     <caption>Lista de Veículos</caption>
     <thead class="thead-dark">
@@ -21,7 +25,7 @@
                 <td>@vehicle.Model</td>
                 <td>@vehicle.Manufacturer.Name</td>
                 <td>
-                    <a asp-controller="Vehicles" asp-action="Get" asp-route-id="@vehicle.VehicleId" class="btn btn-warning" role="button">Alterar</a>
+                    <a asp-controller="Vehicles" asp-action="Edit" asp-route-id="@vehicle.VehicleId" class="btn btn-warning" role="button">Alterar</a>
                     <a asp-controller="Vehicles" asp-action="Delete" asp-route-id="@vehicle.VehicleId" class="btn btn-danger" role="button">Excluir</a>
                 </td>
             </tr>

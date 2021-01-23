@@ -1,4 +1,19 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿
+async function fetchPost(dataToPost) {
+    const response = await fetch("https://localhost:44367/Vehicles/Save", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToPost)
+    })
 
-// Write your JavaScript code.
+    if (!response.ok) {
+        const message = `An error has occured: ${response.status}`
+        throw new Error(message);
+    }
+
+    const jsonResponse = await response.json()
+    return jsonResponse
+}

@@ -30,15 +30,19 @@ namespace VehicleManagement.Data.Implementations
             Vehicle vehicle;
             using (SqlConnection connection = NewConnection())
             {
-                vehicle = 
+                vehicle =
                     connection.Query<Vehicle, Manufacturer, Vehicle>(query, (vehicle, manufacturer) =>
                     {
                         vehicle.Manufacturer = manufacturer;
                         return vehicle;
-                    }, 
-                    splitOn: "ManufacturerId", 
+                    },
+                    splitOn: "ManufacturerId",
                     param: new Vehicle() { VehicleId = id })
                     .First();
+            }
+            if (vehicle.ManufacturerId == 0)
+            {
+                vehicle.ManufacturerId = vehicle.Manufacturer.ManufacturerId;
             }
             return vehicle;
         }
