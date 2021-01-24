@@ -6,7 +6,8 @@ namespace VehicleManagement.UI.Services
 {
     public class VehicleService
     {
-        private const string _url = "https://localhost:44348/api/Vehicles";
+        private static string _baseUrl = System.Environment.GetEnvironmentVariable("API_BASE_URL");
+        private static string _url = $@"{_baseUrl}/Vehicles";
         private static readonly JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true, IncludeFields = true };
         public static IEnumerable<Vehicle> GetAll()
         {

@@ -40,7 +40,7 @@
         });
     }
     function deleteVehicle(vehicleId) {
-        fetch(`https://localhost:44367/Vehicles/Delete?id=${vehicleId}`, {
+        fetch(`${WEB_BASE_URL}/Delete?id=${vehicleId}`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -51,16 +51,16 @@
             if (!resp.ok) {
                 const message = `An error has occured: ${resp.status}`
                 console.error(message)
+            } else {
+                bootbox.alert({
+                    message: `Veículo excluído com sucesso!`,
+                    callback: function () {
+                        setTimeout(function () {
+                            window.location = window.location.origin + '/Vehicles/Index';
+                        }, 1000);
+                    }
+                })
             }
-            bootbox.alert({
-                message: `Veículo excluído com sucesso!`,
-                callback: function () {
-                    setTimeout(function () {
-                        window.location = window.location.origin + '/Vehicles/Index';
-                    }, 1000);
-                }
-            })
-            console.log(resp)
         })
         .catch(err => {
             console.error(err)

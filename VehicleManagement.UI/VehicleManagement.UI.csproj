@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\VehicleManagement.Configuration\VehicleManagement.Configuration.csproj" />
     <ProjectReference Include="..\VehicleManagement.Models\VehicleManagement.Models.csproj" />
   </ItemGroup>
 
