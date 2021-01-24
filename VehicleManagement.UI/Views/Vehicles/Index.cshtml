@@ -3,7 +3,14 @@
     ViewBag.Title = "Lista de Veículos";
 }
 
-<h2>Veículos</h2>
+<div class="row">
+    <div class="col-8"><h2>Veículos</h2></div>
+    <div class="col-4">
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Filtrar" aria-label="Search" id="inputPesquisa">
+        </form>
+    </div>
+</div>
 <table class="table">
     <caption>Lista de Veículos</caption>
     <thead class="thead-dark">
@@ -32,6 +39,15 @@
     </tbody>
 </table>
 <script>
+    window.onload = () => {
+        $("#inputPesquisa").on("keyup", function () {
+            let value = $(this).val().toLowerCase();
+            $(".table tbody tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    }
+
     function confirmDelete(vehicleId) {
         bootbox.confirm("Confirma a exclusão do veículo?", function (confirmed) {
             if (confirmed) {
